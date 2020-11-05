@@ -1,0 +1,272 @@
+<div class="container" style="background-color: lightgrey">
+  <div class="header">
+    <h2 class="text-center text-info">Registo do Cliente: {{lead.lead}}
+      <button class="btn btn-danger fa-pull-right" (click)="rejeitar(lead)">Rejeitar</button>    
+      <button class="btn btn-primary fa-pull-right" (click)="agendar(lead)">Agendar</button>
+      <button class="btn btn-warning fa-pull-right" (click)="naoAtende(lead)">Não Atende</button>
+    </h2>
+  </div>
+    <p>&nbsp;</p>
+
+    <form #f="ngForm" (ngSubmit)="saveAndAnexa(f.value)">
+      <div class="form-row">
+        <div class=" form-group col-md-3">
+          <label for="inputNome">Nome *</label>
+          <input type="text" class="form-control"  id="inputNome"  name="nome" #nome [(ngModel)]="lead.nome" required>
+        </div>
+        <div class=" form-group col-md-1">
+          <label for="inputIdade">Idade *</label>
+          <input type="number" min="18" max="99" class="form-control" id="inputIdade" name="idade" [(ngModel)]="lead.idade" required>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputTelefone">Telefone *</label>
+          <input type="text" class="form-control" id="inputTelefone" name="telefone" [(ngModel)]="lead.telefone" required>
+        </div>
+        <div class=" form-group col-md-2">
+          <label for="inputNIF">NIF *</label>
+          <input type="number" class="form-control" id="inputNIF" name="nif" [(ngModel)]="lead.nif" required>
+        </div>
+        <div class=" form-group col-md-4">
+          <label for="inputEmail4">Email *</label>
+          <input type="email" class="form-control" id="inputEmail4" name="email" [(ngModel)]="lead.email" required>
+        </div>
+      </div>
+      <!--Profissional-->
+      <div class="form-row">
+        <div class=" form-group col-md-3">
+          <label for="inputProfissaao">Profissão *</label>
+          <input type="text" class="form-control" id="inputProfissaao" name="profissao" [(ngModel)]="dprofissionais.profissao" required>
+        </div>
+        <div class=" form-group col-md-2">
+          <label for="inputTipocontrato">Tipo Contrato *</label>
+          <div class="input-group mb-3">
+            <select class="custom-select" id="inputTipocontrato" name="tipocontrato" [(ngModel)]="dprofissionais.tipocontrato" required>
+              <option selected>...</option>
+              <option value="Efectivo">Efectivo</option>
+              <option value="Termo Certo">Termo Certo</option>
+              <option value="Independente">Independente</option>
+              <option value="Temporário">Temporário</option>
+              <option value="Reformado">Reformado</option>
+              <option value="Desempregado">Desempregado</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+        </div>
+        <div class=" form-group col-md-2">
+          <label for="inputVencimento">Vencimento *</label>
+          <input type="number" class="form-control" id="inputVencimento" name="vencimento" [(ngModel)]="dprofissionais.vencimento" required>
+        </div>
+        <div class=" form-group col-md-2">
+          <label for="inputAnoInicio">Ano Inicio *</label>
+          <input type="number" min="1960" max="2030" class="form-control" id="inputAnoInicio" name="anoinicio" [(ngModel)]="dprofissionais.anoinicio" required>
+        </div>
+      </div>
+      <!-- Estado civil e IRS-->
+      <div class="form-row">
+        <div class=" form-group col-md-2">
+          <label for="inputEstadoCivil">Estado Civil *</label>
+          <div class="input-group mb-3">
+            <select class="custom-select" id="inputEstadoCivil" name="estadocivil" [(ngModel)]="lead.estadocivil" required>
+              <option selected>...</option>
+              <option value="Solteiro">Solteiro</option>
+              <option value="Casado">Casado</option>
+              <option value="União de facto">União de facto</option>
+              <option value="Divorciado">Divorciado</option>
+              <option value="Viuvo">Viuvo</option>
+              <option value="Separado">Separado</option>
+            </select>
+          </div>
+        </div>
+        <div class=" form-group col-md-2">
+          <label for="inputAddress2">IRS *</label>
+          <div class="input-group mb-3">
+              <select class="custom-select" id="inputIRS" name="irs" [(ngModel)]="lead.irs" required>
+                <option selected>...</option>
+                <option value="Sim">Sim</option>
+                <option value="Sim Junto">Sim Junto</option>
+                <option value="Sim Separado">Sim Separado</option>
+                <option value="Não">Não</option>
+              </select>
+            </div>
+        </div>
+        <div class=" form-group col-md-1">
+          <label for="inputFilhos">Filhos</label>
+          <input type="number" class="form-control" id="inputFilhos" name="filhos" [(ngModel)]="lead.filhos">
+        </div>
+        <div class=" form-group col-md-2">
+          <label for="input2Proponente">Segundo Proponente</label>
+          <input class="form-control" type="checkbox" name="segundoProponente" [(ngModel)]="d2proponente" />
+        </div>
+      </div>
+      <!-- Segundo proponente-->
+      <div class=" border border-default" *ngIf="f.value.segundoProponente">
+        <div class="form-row">
+          <div class=" form-group col-md-1">
+            <label for="inputConjugue">Conjugue</label>
+            <input type="checkbox" class="form-control" id="inputConjugue" name="isConjugue" [(ngModel)]="d2proponente.conjugue">
+          </div>
+          <div class=" form-group col-md-2">
+            <label for="inputRelacao">Outra relação</label>
+            <input *ngIf="f.value.isConjugue" readonly type="text" class="form-control" id="inputRelacao">
+            <input *ngIf="!f.value.isConjugue" type="text" class="form-control" id="inputRelacao" name="parentesco" [(ngModel)]="d2proponente.parentesco">
+          </div>
+          <div class=" form-group col-md-1">
+            <label for="inputIdade2">Idade *</label>
+            <input type="number" min="18" max="99" class="form-control" id="inputIdade2" name="idade2" [(ngModel)]="d2proponente.idade" [required]="f.value.segundoProponente">
+          </div>
+          <div class=" form-group col-md-2">
+            <label for="inputProfissao2">Profissão *</label>
+            <input type="text" class="form-control" id="inputProfissao2" name="profissao2" [(ngModel)]="d2proponente.profissao" [required]="f.value.segundoProponente">
+          </div>
+          <div class=" form-group col-md-2">
+            <label for="inputTipocontrato2">Tipo Contrato *</label>
+            <div class="input-group mb-3">
+              <select class="custom-select" id="inputTipocontrato2" name="tipocontrato2" [(ngModel)]="d2proponente.tipocontrato" [required]="f.value.segundoProponente">
+                <option selected>...</option>
+                <option value="Efectivo">Efectivo</option>
+                <option value="Termo Certo">Termo Certo</option>
+                <option value="Independente">Independente</option>
+                <option value="Temporário">Temporário</option>
+                <option value="Reformado">Reformado</option>
+                <option value="Desempregado">Desempregado</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+          </div>
+          <div class=" form-group col-md-2">
+            <label for="inputVencimento2">Vencimento *</label>
+            <input type="number" class="form-control" id="inputVencimento2" name="vencimento2" [(ngModel)]="d2proponente.vencimento" [required]="f.value.segundoProponente">
+          </div>
+          <div class=" form-group col-md-2">
+            <label for="inputAnoInicio2">Ano Inicio *</label>
+            <input type="number" min="1960" max="2030" class="form-control" id="inputAnoInicio2" name="anoinicio2" [(ngModel)]="d2proponente.anoinicio" [required]="f.value.segundoProponente">
+          </div>
+        </div>
+  
+        <!--Habitação do segundo proponente-->
+        <div class="form-row">
+          <div class=" form-group col-md-3 text-center">
+            <label for="inputMesma">Habitação do 2º Proponente</label>
+            <div class="form-check form-check-inline">
+              <input class="form-control" type="checkbox" name="mesmahabitacao" id="inputMesma" [(ngModel)]="d2proponente.mesmahabitacao">
+              <label class="form-check-label" for="inputMesma">Mesma do 1º</label>
+            </div>
+          </div>
+          <div class=" form-group col-md-2" *ngIf="!f.value.mesmahabitacao">
+            <label for="inputHabitacao2">Habitação</label>
+            <div class="input-group mb-3">
+              <select class="custom-select" id="inputHabitacao2" name="habitacao2" #habitacao2 [(ngModel)]="d2proponente.habitacao">
+                <option selected>...</option>
+                <option value="Alugada">Alugada</option>
+                <option value="Familiares">Familiares</option>
+                <option value="Própria sem CH">Própria sem CH</option>
+                <option value="Própria com CH">Própria com CH</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group col-md-2" *ngIf="!f.value.mesmahabitacao && (f.value.habitacao2=='Alugada' || f.value.habitacao2=='Própria com CH')">
+            <label for="inputRenda2">Renda/Prestação</label>
+            <input type="number" class="form-control" id="inputRenda2" name="valorhabitacao2" [(ngModel)]="d2proponente.valorhabitacao2"/>
+          </div>
+          <div class="form-group col-md-2" *ngIf="!f.value.mesmahabitacao && (f.value.habitacao2=='Alugada' || f.value.habitacao2=='Própria com CH')">
+            <label for="">Declarada</label>
+            <div class="input-group">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="declarada2sim" value="sim" name="declarada2" [(ngModel)]="d2proponente.declarada2">
+                <label class="form-check-label" for="declarada2sim">Sim</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="declarada2nao" value="nao" name="declarada2" ngModel>
+                <label class="form-check-label" for="declarada2nao">Não</label>
+              </div>
+            </div>
+          </div>
+          <div class=" form-group col-md-2" *ngIf="!f.value.mesmahabitacao">
+            <label for="inputAnoHabitacao2">Desde</label>
+            <input type="number" min="1920" max="2030" class="form-control" id="inputAnoHabitacao2" name="anohabitacao2" [(ngModel)]="d2proponente.anohabitacao2">
+          </div>
+        </div>
+      </div>
+      <!--Habitação do primeiro proponente-->
+      <div class="form-row">
+        <div class=" form-group col-md-2">
+          <label for="inputHabitacao">Habitação *</label>
+          <div class="input-group mb-3">
+            <select class="custom-select" id="inputHabitacao" name="habitacao" [(ngModel)]="dhabitacao.habitacao" required>
+              <option selected>...</option>
+              <option value="Alugada">Alugada</option>
+              <option value="Familiares">Familiares</option>
+              <option value="Própria sem CH">Própria sem CH</option>
+              <option value="Própria com CH">Própria com CH</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-md-2" *ngIf="(f.value.habitacao=='Alugada' || f.value.habitacao=='Própria com CH')">
+          <label for="inputRenda">Renda/Prestação</label>
+          <input type="number" class="form-control" id="inputRenda" name="valorhabitacao" [(ngModel)]="dhabitacao.valorhabitacao" />
+        </div>
+        <div class="form-group col-md-2" *ngIf="(f.value.habitacao=='Alugada' || f.value.habitacao=='Própria com CH')">
+          <label for="">Declarada</label>
+          <div class="input-group">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="declarada" id="declaradasim" value="Sim" [(ngModel)]="dhabitacao.declarada">
+              <label class="form-check-label" for="declaradasim">Sim</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="declarada" id="declaradanao" value="Não" [(ngModel)]="dhabitacao.declarada">
+              <label class="form-check-label" for="declaradanao">Não</label>
+            </div>
+          </div>
+        </div>
+        <div class=" form-group col-md-2">
+          <label for="inputAnoHabitacao">Desde</label>
+          <input type="number" min="1920" max="2030" class="form-control" id="inputAnoHabitacao" name="anohabitacao" [(ngModel)]="dhabitacao.anohabitacao">
+        </div>
+      </div>
+
+      <!-- Outros Créditos -->
+      <h5>Mapa de dividas</h5>
+      <hr>
+      <div class="form-row" *ngFor="let oc of OCArr; index as i; last as isLast;">
+        <div class="form-group col-md-3">
+          <label for="inputOC" *ngIf="i==0">Entidade</label>
+          <input type="text" class="form-control" id="inputOC" name="ocEntidade{{i}}" [(ngModel)]="oc.entidade">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputOC" *ngIf="i==0">Tipo</label>
+            <input type="text" class="form-control" id="inputOC" name="ocCredito{{i}}" [(ngModel)]="oc.tipocredito">
+        </div>        
+        <div class="form-group col-md-2">
+          <label for="inputOCValor" *ngIf="i==0">Valor</label>
+          <input type="number" class="form-control" id="inputOCValor" name="ocValor{{i}}" [(ngModel)]="oc.valorcredito">
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputPrestacao" *ngIf="i==0">Prestação</label>
+          <input type="number" class="form-control" id="inputOCPrestacao" name="ocPrestacao{{i}}" [(ngModel)]="oc.prestacao">
+        </div>
+        <div class="form-group col-md-1">
+          <label for="add" *ngIf="i==0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <a *ngIf="i==0 || isLast" id="add" class="btn btn" title="Adicionar uma linha" (click)="addLineOutrosCreditos()"><i
+              class="fa fa-plus-circle"></i></a>
+          <a *ngIf="i>0" class="btn btn-sm" title="Remover linha" (click)="removeLineOutrosCreditos(i)"><i class="fa fa-minus-circle"></i></a>
+        </div>
+      </div>
+
+        <!--Informações -->
+        <div class="form-row">
+          <div class=" form-group col-md-6">
+            <label>Outras informações</label>
+            <textarea class="form-control" rows="2" name="info" ngModel></textarea>
+          </div>
+          <div class=" form-group col-md-6">
+            <label>&nbsp;</label>
+              <button type="submit" [disabled]="!f.valid" class="btn btn-outline-success btn-block">Seguinte</button>
+              <button type="button" class="btn btn-outline-danger btn-block" (click)="cancelar()">Cancelar</button>
+  
+          </div> 
+        </div> 
+    </form>
+  
+  </div>
+  
+  

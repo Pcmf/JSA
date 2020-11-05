@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row">
+    <div class="card border-danger mb-3" style="width: 16rem;margin-top:5%">
+      <div class="card-header">Anuladas</div>
+      <div class="card-body text-danger text-center">
+        <h1 class="card-title">{{anul}}</h1>
+        <button [disabled]="anul==0" class="btn btn-lg btn-round btn-danger" routerLink="/anul"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+
+    <div class="card border-primary mb-3" style="width: 16rem;margin-top:5%">
+      <div class="card-header">Agendadas</div>
+      <div class="card-body text-primary text-center">
+        <h1 class="card-title">{{agendadas}}</h1>
+        <button [disabled]="agendadas==0" class="btn btn-lg btn-round btn-primary" routerLink="/agendadas"><i class="fa fa-list"></i></button>
+      </div>
+    </div>
+    <div class="card border-warning mb-3" style="width: 16rem;margin-top:5%">
+      <div class="card-header">Aguardam Documentação</div>
+      <div class="card-body text-warning text-center">
+        <h1 class="card-title">{{agdocs}}</h1>
+        <button [disabled]="agdocs==0" class="btn btn-lg btn-round btn-warning" routerLink="/ag-docs"><i class="fa fa-hourglass"></i></button>
+      </div>
+    </div>
+    <div class="card border-info mb-3" style="width: 16rem;margin-top:5%">
+      <div class="card-header">Aguardam Pagamento</div>
+      <div class="card-body text-info text-center">
+        <h1 class="card-title">{{agpag}}</h1>
+        <button [disabled]="agpag==0" class="btn btn-lg btn-round btn-info" routerLink="/ag-pag"><i class="fa fa-eur"></i></button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card border-info mb-3" style="width: 72%;">
+      <div class="card-header">Listagem</div>
+      <div class="card-body text-info">
+        <table class="table table-condensed table-sm">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let l of lista">
+              <th>{{l.lead}}</th>
+              <td>{{l.nome}}</td>
+              <td>{{l.email}}</td>
+              <td [title]="l.descricao">{{l.situacao}}</td>
+              <td>{{l.datastatus}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card border-success mb-3" style="width: 16rem;">
+      <div class="card-header">Novas</div>
+      <div class="card-body text-success text-center">
+        <h1 class="card-title">{{novas}}</h1>
+        <button [disabled]="(novas + agendaativas)==0" class="btn btn-lg btn-round btn-success" routerLink="/form"><i
+            class="fa fa-phone btn-block"></i> Puxar</button>
+      </div>
+    </div>
+
+  </div>
+</div>

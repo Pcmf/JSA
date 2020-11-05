@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="titulo">
+      <h3 class="text-center text-primary">DOCUMENTAÇÃO A PEDIR</h3>
+      <button class="btn btn-info btn-sm pull-right" (click)="criar()" data-toggle="modal" data-target="#Modal"><i class="fa fa-plus"></i> Add</button>
+    </div>
+    <div class="corpo">
+      <table class="table table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Sigla</th>
+            <th>Documento</th>
+            <th>Descrição</th>
+            <th>Proponente</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of elementos">
+              <td>{{e.id}}</td>
+              <td>{{e.sigla}}</td>
+              <td>{{e.documento}}</td>
+              <td>{{e.descricao}}</td>
+              <td>{{e.proponente}}</td>
+              <td class="text-right">
+                <button class="btn btn-info btn-sm" (click)="editar(e)" data-toggle="modal" data-target="#Modal"><i class="fa fa-pencil"></i></button>
+                <button class="btn btn-danger btn-sm" (click)="remover(e)"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Criar/Editar Documento a Pedir</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form #f="ngForm" >
+          <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control" name="id" [(ngModel)]="elem.id"> 
+                <label>Sigla</label>
+                <input type="text" class="form-control" name="sigla" [(ngModel)]="elem.sigla">
+                <label>Documento</label>
+                <input type="text" class="form-control" name="documento" [(ngModel)]="elem.documento">
+                <label>Descrição</label>
+                <input type="text" class="form-control" name="descricao" [(ngModel)]="elem.descricao">
+                <label>Proponente</label>
+                <select class="form-control" name="proponente" [(ngModel)]="elem.proponente">
+                  <option>...</option>
+                  <option value="1">1ª</option>
+                  <option value="2">2ª</option>
+                </select>
+                 <label>Ativo</label> 
+                <input type="checkbox" class="form-control" name="ativo" [(ngModel)]="elem.ativo">                                 
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary" (click)="save(elem)" data-dismiss="modal">Guardar</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
